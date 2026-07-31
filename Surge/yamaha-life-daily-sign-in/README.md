@@ -1,6 +1,6 @@
 # YAMAHA LIFE 每日簽到
 
-這個 Surge 模組每天 00:05 呼叫台灣山葉機車 YAMAHA LIFE App 的官方 API，先執行會員簽到，再查詢目前點數，並以本機通知顯示兩次結果。它是由既有的 `YamahaLifeDailySignIn.js` 私人草稿整理而成；轉換後不再需要該舊腳本。
+這個 Surge 模組每天 00:05 呼叫台灣山葉機車 YAMAHA LIFE App 的官方 API，先執行會員簽到，再查詢目前點數，等兩個請求都完成後以一則本機通知合併顯示結果。
 
 ## 適用範圍
 
@@ -36,7 +36,7 @@ https://raw.githubusercontent.com/kinjih/automation-toolbox/main/Surge/yamaha-li
 - 會員編號是個人資料，請勿貼到 issue、日誌、截圖或提交到 Git。
 - 會員編號只由 Surge 的模組參數提供給腳本，不會寫入 `$persistentStore`，也不會輸出會員編號或原始 response body。
 - 會員編號會以 `access_token` 欄位送往 `app.yamaha-motor.com.tw` 的兩個 API；GitHub Raw 只用來下載模組與 JavaScript，不會收到會員編號。
-- 通知可能顯示點數餘額及 Yamaha API 提供的狀態文字，請留意鎖定畫面的通知預覽設定。
+- 合併通知會顯示簽到狀態、點數餘額及 Yamaha API 提供的狀態文字，請留意鎖定畫面的通知預覽設定。
 
 ## 已知限制
 

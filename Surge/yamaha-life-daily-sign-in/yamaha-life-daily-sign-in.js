@@ -88,6 +88,11 @@ function pointMessage(payload) {
   return [`目前${points || "未知"}點`, disabled].filter(Boolean).join("，");
 }
 
+function resultLine(label, result, formatSuccess) {
+  const message = result.ok ? formatSuccess(result.value) : `錯誤：${result.message}`;
+  return `${label}：${message}`;
+}
+
 function createYamahaLifeRunner({ post, notify, done, memberId }) {
   let finished = false;
 
@@ -118,15 +123,13 @@ function createYamahaLifeRunner({ post, notify, done, memberId }) {
     }
 
     postJson(post, YAMAHA_LIFE_ENDPOINTS.signIn, id, (signInResult) => {
-      postNotification(
-        signInResult.ok ? "簽到結果" : "請求簽到發生錯誤",
-        signInResult.ok ? apiMessage(signInResult.value) : signInResult.message,
-      );
-
       postJson(post, YAMAHA_LIFE_ENDPOINTS.pointList, id, (pointResult) => {
         postNotification(
-          pointResult.ok ? "點數紀錄" : "請求點數紀錄發生錯誤",
-          pointResult.ok ? pointMessage(pointResult.value) : pointResult.message,
+          "執行結果",
+          [
+            resultLine("簽到", signInResult, apiMessage),
+            resultLine("點數", pointResult, pointMessage),
+          ].join("\n"),
         );
         finish();
       });

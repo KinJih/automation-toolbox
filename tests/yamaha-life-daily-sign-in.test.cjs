@@ -45,11 +45,51 @@ test("posts the member number to only the two original Yamaha endpoints", () => 
   ]);
   assert.equal(result.requests[0].body, JSON.stringify({ access_token: "TEST_MEMBER_ID" }));
   assert.equal(result.requests[1].body, JSON.stringify({ access_token: "TEST_MEMBER_ID" }));
-  assert.equal(result.notifications[0][1], "簽到結果");
-  assert.equal(result.notifications[0][2], "簽到成功");
-  assert.equal(result.notifications[1][1], "點數紀錄");
-  assert.equal(result.notifications[1][2], "目前12點，無即將到期點數");
+  assert.equal(result.notifications.length, 1);
+  assert.equal(result.notifications[0][1], "執行結果");
+  assert.equal(
+    result.notifications[0][2],
+    "簽到：簽到成功\n點數：目前12點，無即將到期點數",
+  );
   assert.equal(result.doneCount, 1);
+});
+
+test("waits for both responses before posting the combined notification", () => {
+  const callbacks = [];
+  const requests = [];
+  const notifications = [];
+  let doneCount = 0;
+  const runner = createYamahaLifeRunner({
+    memberId: "TEST_MEMBER_ID",
+    post(options, callback) {
+      requests.push(options);
+      callbacks.push(callback);
+    },
+    notify(...args) {
+      notifications.push(args);
+    },
+    done() {
+      doneCount += 1;
+    },
+  });
+
+  runner.run();
+  assert.equal(requests.length, 1);
+  assert.equal(notifications.length, 0);
+  assert.equal(doneCount, 0);
+
+  callbacks.shift()(null, { status: 200 }, JSON.stringify({ RC: "0", RM: "簽到成功" }));
+  assert.equal(requests.length, 2);
+  assert.equal(notifications.length, 0);
+  assert.equal(doneCount, 0);
+
+  callbacks.shift()(
+    null,
+    { status: 200 },
+    JSON.stringify({ RC: "0", result: { remainPoints: 12, disabled: "正常" } }),
+  );
+  assert.equal(notifications.length, 1);
+  assert.equal(doneCount, 1);
 });
 
 test("does not send requests when the member number is missing", () => {
@@ -79,10 +119,10 @@ test("handles network and invalid JSON failures without exposing response bodies
     { data: "private non-json response" },
   ]);
 
-  assert.equal(result.notifications[0][1], "請求簽到發生錯誤");
-  assert.match(result.notifications[0][2], /網路錯誤/);
-  assert.equal(result.notifications[1][1], "請求點數紀錄發生錯誤");
-  assert.equal(result.notifications[1][2], "伺服器回傳的內容不是有效的 JSON");
+  assert.equal(result.notifications.length, 1);
+  assert.equal(result.notifications[0][1], "執行結果");
+  assert.match(result.notifications[0][2], /^簽到：錯誤：網路錯誤/);
+  assert.match(result.notifications[0][2], /點數：錯誤：伺服器回傳的內容不是有效的 JSON$/);
   assert.doesNotMatch(JSON.stringify(result.notifications), /private non-json response/);
   assert.equal(result.doneCount, 1);
 });
