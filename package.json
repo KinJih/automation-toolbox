@@ -4,7 +4,7 @@
   "private": true,
   "description": "Small, self-contained automation tools.",
   "scripts": {
-    "check": "node --check userscripts/parking-payment-plate-autofill/parking-payment-plate-autofill.user.js",
+    "check": "node --check userscripts/parking-payment-plate-autofill/parking-payment-plate-autofill.user.js && node --check userscripts/netflix-dual-subs/netflix-dual-subs.user.js",
     "test": "node --test tests/*.test.cjs"
   },
   "license": "MIT"

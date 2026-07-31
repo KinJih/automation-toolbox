@@ -7,6 +7,7 @@
 | 工具 | 類型 | 功能 | 狀態 |
 | --- | --- | --- | --- |
 | [停車繳費車牌自動填入](userscripts/parking-payment-plate-autofill/) | Userscript | 在支援的停車繳費網站共用、記憶並填入車牌 | Stable |
+| [Netflix 雙字幕](userscripts/netflix-dual-subs/) | Userscript | 同時顯示 Netflix 提供的兩條字幕軌，不翻譯或呼叫第三方服務 | Stable |
 
 ## 收錄原則
 
