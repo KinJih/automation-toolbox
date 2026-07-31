@@ -1,0 +1,14 @@
+# macOS
+.DS_Store
+**/.DS_Store
+
+# Local secrets and private drafts
+.env
+.env.*
+!.env.example
+*.local
+private/
+secrets/
+
+# Test output
+coverage/
