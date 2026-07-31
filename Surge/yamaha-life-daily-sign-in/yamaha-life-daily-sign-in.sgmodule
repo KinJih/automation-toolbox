@@ -1,0 +1,7 @@
+#!name=YAMAHA LIFE 每日簽到
+#!desc=每日 00:05 呼叫 YAMAHA LIFE 官方 API 簽到並查詢點數。啟用前請填入 App 內的會員編號。
+#!system=ios
+#!arguments=MEMBER_ID=
+
+[Script]
+YAMAHA LIFE 每日簽到 = type=cron,cronexp="5 0 * * *",script-path=https://raw.githubusercontent.com/kinjih/automation-toolbox/main/Surge/yamaha-life-daily-sign-in/yamaha-life-daily-sign-in.js,script-update-interval=86400,timeout=15,argument="%MEMBER_ID%"
