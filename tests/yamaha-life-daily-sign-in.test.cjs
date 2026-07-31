@@ -59,6 +59,20 @@ test("does not send requests when the member number is missing", () => {
   assert.equal(result.doneCount, 1);
 });
 
+test("does not send requests when the module placeholder is unresolved", () => {
+  const result = makeRunner([], "{{{會員編號}}}");
+  assert.equal(result.requests.length, 0);
+  assert.equal(result.notifications[0][1], "尚未設定會員編號");
+  assert.equal(result.doneCount, 1);
+});
+
+test("does not send requests when the module still has its prompt value", () => {
+  const result = makeRunner([], "請填入會員編號");
+  assert.equal(result.requests.length, 0);
+  assert.equal(result.notifications[0][1], "尚未設定會員編號");
+  assert.equal(result.doneCount, 1);
+});
+
 test("handles network and invalid JSON failures without exposing response bodies", () => {
   const result = makeRunner([
     { error: "offline" },
@@ -86,8 +100,11 @@ test("module contains only the scheduled script and its exact remote path", () =
   );
   const source = fs.readFileSync(modulePath, "utf8");
 
-  assert.match(source, /^#!arguments=MEMBER_ID=$/m);
+  assert.match(source, /^#!arguments=會員編號:請填入會員編號$/m);
+  assert.match(source, /^#!arguments-desc=.*Ya 粉資訊 > 個人資料 > 會員編號/m);
   assert.match(source, /type=cron,cronexp="5 0 \* \* \*"/);
+  assert.match(source, /argument="\{\{\{會員編號\}\}\}"/);
+  assert.doesNotMatch(source, /MEMBER_ID/);
   assert.match(
     source,
     /script-path=https:\/\/raw\.githubusercontent\.com\/kinjih\/automation-toolbox\/main\/Surge\/yamaha-life-daily-sign-in\/yamaha-life-daily-sign-in\.js/,

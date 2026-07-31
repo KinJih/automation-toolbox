@@ -23,7 +23,7 @@ https://raw.githubusercontent.com/kinjih/automation-toolbox/main/Surge/yamaha-li
 
 安裝時請設定：
 
-- `MEMBER_ID`：請至 YAMAHA LIFE App 的「Ya 粉資訊 > 個人資料 > 會員編號」找到自己的會員編號，再填入這個模組參數。repo 不提供會員編號，也不會從 App 流量自動擷取。
+- `會員編號`：請將預設的「請填入會員編號」完整替換成自己的會員編號。會員編號可在 YAMAHA LIFE App 的「Ya 粉資訊 > 個人資料 > 會員編號」找到；repo 不提供會員編號，也不會從 App 流量自動擷取。
 
 模組使用 cron `5 0 * * *`，依裝置當地時間於每天 00:05 執行。也可以在 Surge 的腳本列表手動執行。
 

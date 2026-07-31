@@ -103,7 +103,12 @@ function createYamahaLifeRunner({ post, notify, done, memberId }) {
 
   function run() {
     const id = cleanMemberId(memberId);
-    if (!id || /^%[A-Z0-9_]+%$/.test(id)) {
+    if (
+      !id ||
+      id === "請填入會員編號" ||
+      /^%[A-Z0-9_]+%$/.test(id) ||
+      /^\{\{\{.+\}\}\}$/.test(id)
+    ) {
       postNotification(
         "尚未設定會員編號",
         "請至 YAMAHA LIFE App 的「Ya 粉資訊 > 個人資料 > 會員編號」查找並填入模組參數",
