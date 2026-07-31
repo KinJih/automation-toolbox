@@ -1,0 +1,9 @@
+#!name=iPhone 台灣直營店庫存檢查
+#!desc=每分鐘查詢 Apple 台灣直營店庫存；有貨時發送通知。請先設定機型、門市與開賣時間。
+#!arguments=機型代號:機型代號/產品網址,門市代號:R713|R694,開賣時間:Now/YYYY-MM-DD HH:mm
+#!arguments-desc=機型代號：填 Apple 零件編號，例如「MG8G4ZP/A」，或貼上已選定尺寸、容量及顏色的 Apple 台灣產品頁網址。\n門市代號：台北 101 是「R713」、信義 A13 是「R694」，以 | 分隔\n開賣時間：填台灣時間 YYYY-MM-DD HH:mm，已開賣可填「立即」或「Now」。
+
+# Reference: https://github.com/Black-Magic-Lab/Surge/blob/master/modules/iphone_check_store.sgmodule
+
+[Script]
+iPhone 台灣直營店庫存檢查 = type=cron,cronexp="* * * * *",wake-system=1,timeout=15,script-path=https://raw.githubusercontent.com/kinjih/automation-toolbox/main/Surge/iphone-tw-retail-stock-checker/iphone-tw-retail-stock-checker.js,script-update-interval=86400,argument="model={{{機型代號}}}&stores={{{門市代號}}}&saleAt={{{開賣時間}}}"

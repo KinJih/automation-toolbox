@@ -9,6 +9,7 @@
 | [停車繳費車牌自動填入](userscripts/parking-payment-plate-autofill/) | Userscript | 在支援的停車繳費網站共用、記憶並填入車牌 | Stable |
 | [Netflix 雙字幕](userscripts/netflix-dual-subs/) | Userscript | 同時顯示 Netflix 提供的兩條字幕軌，不翻譯或呼叫第三方服務 | Stable |
 | [YAMAHA LIFE 每日簽到](Surge/yamaha-life-daily-sign-in/) | Surge Module | 每日呼叫 YAMAHA LIFE 官方 API 簽到並查詢點數餘額 | Stable |
+| [iPhone 台灣直營店庫存檢查](Surge/iphone-tw-retail-stock-checker/) | Surge Module | 開賣後每分鐘檢查 Apple 台灣直營店取貨庫存 | Beta |
 
 ## 收錄原則
 
